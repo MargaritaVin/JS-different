@@ -5,8 +5,7 @@ if (keyValue === null) {
     fetch('https://jsonplaceholder.typicode.com/users/1')
     .then((response) => response.json())
     .then((result) => {
-        let user = result;
-        localStorage.setItem("User", JSON.stringify(user));
+        localStorage.setItem("User", JSON.stringify(result));
     })
     .catch((error) => console.log(error));
 };
