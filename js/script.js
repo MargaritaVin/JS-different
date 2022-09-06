@@ -1,28 +1,20 @@
 "use strict";
 
-const getUser = async () => {
-    try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
-        if (!response.ok) {
-          throw new Error("Error: not found");
-        }
-        const data = await response.json();
-        localStorage.setItem("User", JSON.stringify(data));
-        const keyValue = JSON.parse(localStorage.getItem("User"));
-        if (keyValue) {
-            console.log(keyValue);
-        } else {
-            localStorage.setItem("User", JSON.stringify(data));
-        }
-    } catch (err) {
-        console.error(err.message);
-    }
+const keyValue = JSON.parse(localStorage.getItem("User"));
+if (keyValue === null) {
+    fetch('https://jsonplaceholder.typicode.com/users/1')
+    .then((response) => response.json())
+    .then((result) => {
+        let user = result;
+        localStorage.setItem("User", JSON.stringify(user));
+    })
+    .catch((error) => console.log(error));
 };
-getUser();
+console.log(keyValue);
 
 function isValidDateFormat(str) {
     const strDate = str;
-    const regexp = /^\d{4}\/\d\d\/\d\d\s\d\d:\d\d$/;
+    const regexp = /^\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2}$/;
     return regexp.test(strDate);
 };
 console.log(isValidDateFormat("2012/09/18 12:10")); 
