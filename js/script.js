@@ -8,7 +8,12 @@ const getUser = async () => {
         }
         const data = await response.json();
         localStorage.setItem("User", JSON.stringify(data));
-        console.log(JSON.parse(localStorage.getItem("User")));
+        const keyValue = JSON.parse(localStorage.getItem("User"));
+        if (keyValue) {
+            console.log(keyValue);
+        } else {
+            localStorage.setItem("User", JSON.stringify(data));
+        }
     } catch (err) {
         console.error(err.message);
     }
@@ -17,15 +22,13 @@ getUser();
 
 function isValidDateFormat(str) {
     const strDate = str;
-    const regexp = /^\d\d\d\d\/\d\d\/\d\d\s\d\d:\d\d$/;
+    const regexp = /^\d{4}\/\d\d\/\d\d\s\d\d:\d\d$/;
     return regexp.test(strDate);
 };
 console.log(isValidDateFormat("2012/09/18 12:10")); 
 console.log(isValidDateFormat("12.02.2022 12:10")); 
 
-function isAfter(start, end) {
-    const startDate = start;
-    const endDate = end;
+function isAfter(startDate, endDate) {
     return startDate > endDate;
 };
 console.log(isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))); 
